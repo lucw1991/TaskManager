@@ -16,7 +16,7 @@ import java.util.List;
 public class TaskService {
 
     // Array list to store created tasks.
-    private List<Task> taskList = new ArrayList<>();
+    private final List<Task> taskList = new ArrayList<>();
 
     public void addTask(String name) {
         Task task = new Task(name);
