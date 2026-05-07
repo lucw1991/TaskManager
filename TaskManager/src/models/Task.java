@@ -2,6 +2,11 @@ package models;
 
 import enums.Status;
 
+/*
+   This is the basic model for the Task object. It has two constructors. The Name of a task will not change as of the
+   first iteration of this program, in its CLI form.
+*/
+
 
 public class Task {
 
@@ -9,10 +14,15 @@ public class Task {
     private Status status;
 
 
-    // Constructor
+    // Constructors
     public Task(String name) {
         this.name = name;
         this.status = Status.PENDING;
+    }
+
+    public Task(String name, Status status) {
+        this.name = name;
+        this.status = status;
     }
 
 
