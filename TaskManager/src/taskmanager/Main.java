@@ -3,6 +3,7 @@ package taskmanager;
 import java.util.List;
 import java.util.Scanner;
 
+import enums.Status;
 import models.Task;
 import services.TaskService;
 
@@ -35,7 +36,7 @@ public class Main {
             System.out.print("Welcome! Begin managing your tasks:\n...\n...\n");
 
             System.out.println("What do you want to do?");
-            System.out.println("1: Add Task \n2: View Tasks \n3: Exit");
+            System.out.println("1: Add Task \n2: View Tasks \n3: Update Task \n4: Exit");
 
 
             // Take in a choice from the user.
@@ -87,12 +88,68 @@ public class Main {
 
             } else if (choice == 3) {
 
+                // Boolean to track updates
+                boolean isUpdated = false;
+
+
+                // Check if the list is empty first
+                if (tList.isEmpty()) {
+                    System.out.println("List is empty!");
+                } else {
+
+                    // Print list of tasks
+                    for (Task t : tList) {
+                        System.out.println("Task: " + t.getName() + " " + t.getStatus());
+                    }
+
+                    // Ask which to update
+                    System.out.println("Which task status would you like to update?\n");
+                    String ans = in.nextLine();
+
+                    // Check if in the list,
+                    for (Task task : tList) {
+
+                        // If the input is present as a task name
+                        if (task.getName().equals(ans)) {
+
+                            // Ask what to update to
+                            System.out.println("Update to what: ");
+                            System.out.println("1: In Progress \n2: For later \n3: Complete \nChoose 1, 2, or 3");
+
+                            // Take int value to status type
+                            int status = in.nextInt();
+
+                            // Take care of left over blank line after nextInt().
+                            in.nextLine();
+
+                            // Apply status
+                            if (status == 1) {
+                                service.updateTask(task.getName(), Status.IN_PROGRESS);
+                            } else if (status == 2) {
+                                service.updateTask(task.getName(), Status.PENDING);
+                            } else if (status == 3) {
+                                service.updateTask(task.getName(), Status.COMPLETE);
+                            }
+
+                            System.out.println("Task has been updated!");
+                            isUpdated = true;
+                        }
+                    }
+                }
+
+                // If not found and isUpdated stays false, print the message.
+                if (!isUpdated) {
+                    System.out.println("Task not found!");
+                }
+
+            } else if (choice == 4) {
+
                 // Exit program
                 System.out.println("Goodbye!");
                 isRunning = false;
 
             } else {
-                System.out.println("Choose a correct option, 1 through 3.");
+                System.out.println("Choose a correct option, 1 through 4.");
                 Thread.sleep(1000);
             }
 
