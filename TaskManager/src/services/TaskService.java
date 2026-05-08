@@ -100,4 +100,22 @@ public class TaskService {
         updateTask(task, Status.COMPLETE);
     }
 
+
+    public List<Task> filterTasks(String name) {
+
+        // New list to display
+        List<Task> nList = new ArrayList<>();
+
+        // Iterate and look for task by name.
+        for (Task t : taskList) {
+            // Add if found.
+            if (t.getName().equals(name)) {
+                nList.add(t);
+            }
+        }
+
+        return nList;
+
+    }
+
 }
