@@ -36,7 +36,14 @@ public class Main {
             System.out.print("Welcome! Begin managing your tasks:\n...\n...\n");
 
             System.out.println("What do you want to do?");
-            System.out.println("1: Add Task \n2: View Tasks \n3: Update Task \n4: Delete Task \n5: Exit");
+            System.out.println("""
+                    1: Add Task\s
+                    2: View Tasks\s
+                    3: Update Task \
+                    
+                    4: Delete Task\s
+                    5: Search for Task\s
+                    6: Exit""");
 
 
             // Take in a choice from the user.
@@ -174,12 +181,45 @@ public class Main {
 
             } else if (choice == 5) {
 
+                if (tList.isEmpty()) {
+
+                    // Initial list is empty
+                    System.out.println("No tasks to search!");
+
+                } else {
+
+                    System.out.println("Enter the task you are searching for by name: ");
+                    String ans = in.nextLine();
+
+                    // List to display if Task is found.
+                    List<Task> list = service.filterTasks(ans);
+
+                    if (list.isEmpty()) {
+
+                        // Searched in an empty list.
+                        System.out.println("Task not found!");
+
+                    } else {
+
+                        // If not empty, iterate and get the name of the searched task object from the created list.
+                        for (Task t : list) {
+                            System.out.println(t.getName() + ", " + t.getStatus());
+                        }
+
+                    }
+
+                }
+
+                Thread.sleep(500);
+
+            } else if (choice == 6) {
+
                 // Exit program
                 System.out.println("Goodbye!");
                 isRunning = false;
 
             } else {
-                System.out.println("Choose a correct option, 1 through 5.");
+                System.out.println("Choose a correct option, 1 through 6.");
                 Thread.sleep(1000);
             }
 
