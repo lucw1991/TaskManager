@@ -36,7 +36,7 @@ public class Main {
             System.out.print("Welcome! Begin managing your tasks:\n...\n...\n");
 
             System.out.println("What do you want to do?");
-            System.out.println("1: Add Task \n2: View Tasks \n3: Update Task \n4: Exit");
+            System.out.println("1: Add Task \n2: View Tasks \n3: Update Task \n4: Delete Task \n5: Exit");
 
 
             // Take in a choice from the user.
@@ -52,13 +52,13 @@ public class Main {
                 String tName = in.nextLine();
 
                 // Create the new task with the given name
-                service.addTask(tName);
+                if (service.addTask(tName)) {
+                    // Confirm
+                    System.out.println("Task added!");
 
-                // Confirm
-                System.out.println("Task added!");
-
-                // Short wait before moving on
-                Thread.sleep(1500);
+                    // Short wait before moving on
+                    Thread.sleep(500);
+                }
 
             } else if (choice == 2) {
 
@@ -72,6 +72,7 @@ public class Main {
                             System.out.println(t.getName() + ", " + t.getStatus());
                         }
                         System.out.println("Would you like to go back to the main page? Just Y/N");
+                        Thread.sleep(500);
 
                         String ans = in.nextLine();
                         if (ans.equals("Y") || ans.equals("y") || ans.equals("yes")
@@ -82,6 +83,7 @@ public class Main {
                             stay = true;
                         } else {
                             System.out.println("Answer must be yes or no.");
+                            Thread.sleep(500);
                         }
                     }
                 }
@@ -95,6 +97,7 @@ public class Main {
                 // Check if the list is empty first
                 if (tList.isEmpty()) {
                     System.out.println("List is empty!");
+                    Thread.sleep(500);
                 } else {
 
                     // Print list of tasks
@@ -133,23 +136,50 @@ public class Main {
 
                             System.out.println("Task has been updated!");
                             isUpdated = true;
+                            Thread.sleep(500);
                         }
                     }
-                }
 
-                // If not found and isUpdated stays false, print the message.
-                if (!isUpdated) {
-                    System.out.println("Task not found!");
+                    // If not found and isUpdated stays false, print the message.
+                    if (!isUpdated) {
+                        System.out.println("Task not found!");
+                        Thread.sleep(500);
+                    }
+
                 }
 
             } else if (choice == 4) {
+
+                // Display list but check if empty first
+                if (tList.isEmpty()) {
+                    System.out.println("List is empty!");
+                    Thread.sleep(500);
+                } else {
+
+                    for (Task t : tList) {
+                        System.out.println("Task: " + t.getName() + " " + t.getStatus());
+                    }
+
+                    System.out.println("Which task would you like to delete?");
+                    String ans = in.nextLine();
+
+                     if (service.deleteTask(ans)) {
+                         System.out.println("Task removed!");
+                         Thread.sleep(500);
+                     } else {
+                         System.out.println("Task not found!");
+                     }
+
+                }
+
+            } else if (choice == 5) {
 
                 // Exit program
                 System.out.println("Goodbye!");
                 isRunning = false;
 
             } else {
-                System.out.println("Choose a correct option, 1 through 4.");
+                System.out.println("Choose a correct option, 1 through 5.");
                 Thread.sleep(1000);
             }
 
